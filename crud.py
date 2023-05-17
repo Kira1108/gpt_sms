@@ -11,9 +11,17 @@ def create_message(db:Session, phone:str, message:str):
     db.refresh(msg)
     return msg
 
-def update_message(db:Session, id:int, ai_message:str) -> bool:
+def update_message(
+    db:Session, 
+    id:int, 
+    ai_message:str, 
+    prompt_tokens:int, 
+    completion_tokens:int, 
+    total_tokens:int) -> bool:
     db.execute(
-        update(Message).where(Message.id == id).values(ai_message=ai_message)
+        update(Message).where(Message.id == id).values(
+            ai_message=ai_message, prompt_tokens=prompt_tokens, 
+            completion_tokens=completion_tokens, total_tokens=total_tokens)
     )
     db.commit()
     return True
