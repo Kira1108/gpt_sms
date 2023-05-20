@@ -1,7 +1,7 @@
-from database import Base, engine, get_db
-from crud import create_message_from_dataframe, delete_all
+from mib_messages.database import Base, engine, get_db
+from mib_messages.crud import create_message_from_dataframe, delete_all
+
 import pandas as pd
-import typer
 import logging
 from typing import Optional
 logging.basicConfig(level=logging.INFO)
@@ -11,7 +11,7 @@ logger = logging.getLogger("Data")
 Base.metadata.create_all(bind=engine)
 
 
-def main(path:str, fmt:Optional[str] = "csv", replace:Optional[bool] = False):
+def create_database(path:str, fmt:Optional[str] = "csv", replace:Optional[bool] = False):
     """Read raw datafile into sqlite database, either csv or feather.
     fmt: file format, csv or feather
     path: path to the file
@@ -42,5 +42,3 @@ def main(path:str, fmt:Optional[str] = "csv", replace:Optional[bool] = False):
     create_message_from_dataframe(df, if_exists = 'append')
     logger.info("Done~~!")
 
-if __name__ == "__main__":
-    typer.run(main)

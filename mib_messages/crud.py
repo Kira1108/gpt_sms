@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import update
-from models import Message
-from database import engine
+from mib_messages.models import Message
+from mib_messages.database import engine
 
 
 def create_message(db:Session, phone:str, message:str):

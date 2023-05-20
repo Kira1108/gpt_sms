@@ -1,8 +1,10 @@
+from mib_messages.prompts import MessagePrompt
+from mib_messages.config import get_settings
+
 import openai
-from prompts import MessagePrompt
 from dataclasses import dataclass
 from pydantic import BaseModel
-from config import get_settings
+
 
 openai.api_key = get_settings().OPENAI_API_KEY
 

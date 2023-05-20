@@ -7,7 +7,7 @@ from sqlalchemy import (
     Boolean
 )
 from sqlalchemy.sql import func
-from database import Base
+from mib_messages.database import Base
 
 class Message(Base):
     __tablename__ = "messages"

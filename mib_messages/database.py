@@ -1,12 +1,11 @@
 import logging
-from config import get_settings
+from mib_messages.config import get_settings
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 logger = logging.getLogger(__name__)
-
 SQLITE_URI = get_settings().DB_URI
 
 engine = create_engine(SQLITE_URI)
