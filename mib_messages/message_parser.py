@@ -22,17 +22,21 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     messages = [{"role": "user", "content": prompt}]
     
     # test using fake response
-    # return OpenAIResponse(content = "fake content",prompt_tokens=10, completion_tokens=10,total_tokens=20)
+    return OpenAIResponse(
+        content = "fake content",
+        prompt_tokens=10, 
+        completion_tokens=10,
+        total_tokens=20)
     
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=0,
-    )
-    return OpenAIResponse(content = response.choices[0]['message']['content'],
-                prompt_tokens = response.usage['prompt_tokens'],
-                completion_tokens = response.usage['completion_tokens'],
-                total_tokens = response.usage['total_tokens'])
+    # response = openai.ChatCompletion.create(
+    #     model=model,
+    #     messages=messages,
+    #     temperature=0,
+    # )
+    # return OpenAIResponse(content = response.choices[0]['message']['content'],
+    #             prompt_tokens = response.usage['prompt_tokens'],
+    #             completion_tokens = response.usage['completion_tokens'],
+    #             total_tokens = response.usage['total_tokens'])
 
 @dataclass
 class MessageParser:

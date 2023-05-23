@@ -4,7 +4,7 @@ import os
 
 class Settings(BaseSettings):
     DB_URI:str = "sqlite:///message_ai.db"
-    OPENAI_API_KEY:str = os.getenv("OPENAI_API_KEY",None)
+    OPENAI_API_KEY:str = os.getenv("OPENAI_API_KEY","fake_api_key")
     FEWSHOT_EXAMPLE_PATH = "./example.json"
     
     
