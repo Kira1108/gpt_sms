@@ -38,9 +38,10 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
 class MessageParser:
     
     template_name:str = 'keywords'
+    examples:list = None
     
     def __post_init__(self):
-        self.prompt = MessagePrompt(template_name = self.template_name)
+        self.prompt = MessagePrompt(template_name = self.template_name, examples= self.examples)
         
     def parse(self, message:str) -> OpenAIResponse:
         prompt_str = self.prompt.format(message = message)
