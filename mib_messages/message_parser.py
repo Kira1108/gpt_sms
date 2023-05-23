@@ -5,7 +5,6 @@ import openai
 from dataclasses import dataclass
 from pydantic import BaseModel
 
-
 openai.api_key = get_settings().OPENAI_API_KEY
 
 if openai.api_key is None:
