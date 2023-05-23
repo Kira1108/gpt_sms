@@ -9,7 +9,7 @@ from message_parser import MessageParser, OpenAIResponse
 logging.basicConfig(level = logging.INFO)
 logger = logging.getLogger("AI")
 
-def next_batch(size =256):
+def next_batch(size =20):
     return get_unparsed_messages(next(get_db()),limit = size)
 
 def gpt_parse(message:str, phone:str, parser:MessageParser) -> OpenAIResponse:
