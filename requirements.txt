@@ -1,0 +1,7 @@
+langchain
+openai
+sqlalchemy
+pandas
+numpy
+pydantic
+"typer[all]"
