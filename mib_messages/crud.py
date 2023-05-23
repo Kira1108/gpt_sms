@@ -11,17 +11,26 @@ def create_message(db:Session, phone:str, message:str):
     db.refresh(msg)
     return msg
 
+def get_msg_by_id(db:Session, id:int):
+    return db.query(Message).filter(Message.id == id).first()
+
 def update_message(
     db:Session, 
     id:int, 
     ai_message:str, 
     prompt_tokens:int, 
     completion_tokens:int, 
-    total_tokens:int) -> bool:
+    total_tokens:int, 
+    ai_json:str = None, 
+    json_compatible:bool = None) -> bool:
     db.execute(
         update(Message).where(Message.id == id).values(
-            ai_message=ai_message, prompt_tokens=prompt_tokens, 
-            completion_tokens=completion_tokens, total_tokens=total_tokens)
+            ai_message=ai_message, 
+            prompt_tokens=prompt_tokens, 
+            completion_tokens=completion_tokens, 
+            total_tokens=total_tokens, 
+            ai_json = ai_json, 
+            json_compatible = json_compatible)
     )
     db.commit()
     return True
@@ -49,4 +58,7 @@ def delete_all(db:Session):
 def get_unparsed_messages(db:Session, limit = 256):
     """get all messages that have not been parsed by the AI"""
     return db.query(Message).filter(Message.ai_message == None).limit(limit).all()
+
+
+
 
