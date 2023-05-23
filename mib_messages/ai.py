@@ -1,18 +1,18 @@
-from crud import get_unparsed_messages, update_message
-from database import get_db
+from mib_messages.crud import get_unparsed_messages, update_message
+from mib_messages.database import get_db
+from mib_messages.message_parser import MessageParser
 import json
-import typer
 import time
 import logging
 from typing import Optional
-from message_parser import MessageParser, OpenAIResponse
+
 logging.basicConfig(level = logging.INFO)
 logger = logging.getLogger("AI")
 
 def next_batch(size =20):
     return get_unparsed_messages(next(get_db()),limit = size)
 
-def gpt_parse(message:str, phone:str, parser:MessageParser) -> bool:
+def gpt_parse(message_id:int, message:str, phone:str, parser:MessageParser) -> bool:
     msg = f"Sent from {phone}. Message: {message}"
     
     resp = parser.parse(msg)
@@ -38,7 +38,7 @@ def gpt_parse(message:str, phone:str, parser:MessageParser) -> bool:
         total_tokens = total_tokens
     )
     
-    return update_message(next(get_db()), message.id, **info)
+    return update_message(next(get_db()), message_id, **info)
 
 
 def ai_loop(template:Optional[str] = 'keywords'):
@@ -51,7 +51,7 @@ def ai_loop(template:Optional[str] = 'keywords'):
     while True:
         
         # fetch a batch of messages
-        batch = next_batch(size = 10)
+        batch = next_batch(size = 3)
         
         if len(batch) == 0:
             break
@@ -61,7 +61,7 @@ def ai_loop(template:Optional[str] = 'keywords'):
         # parse each message in the batch
         for message in batch:
             try:
-                gpt_parse(message.message, message.phone, parser)
+                gpt_parse(message.id, message.message, message.phone, parser)
             except Exception as e:
                 logger.info("Error parsing message. Don' worry, we'll try again later.")
                 logger.info(e)
@@ -72,5 +72,3 @@ def ai_loop(template:Optional[str] = 'keywords'):
     if batch_id == 1:
         logger.info("No unparsed messages.")
         
-if __name__ == "__main__":
-    typer.run(main)
