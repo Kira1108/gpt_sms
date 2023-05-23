@@ -12,7 +12,7 @@ logger = logging.getLogger("AI")
 def next_batch(size =20):
     return get_unparsed_messages(next(get_db()),limit = size)
 
-def gpt_parse(message:str, phone:str, parser:MessageParser) -> OpenAIResponse:
+def gpt_parse(message:str, phone:str, parser:MessageParser) -> bool:
     msg = f"Sent from {phone}. Message: {message}"
     
     resp = parser.parse(msg)
@@ -38,46 +38,34 @@ def gpt_parse(message:str, phone:str, parser:MessageParser) -> OpenAIResponse:
         total_tokens = total_tokens
     )
     
-    update_message(next(get_db()), message.id, **info)
+    return update_message(next(get_db()), message.id, **info)
 
 
-def main(template:Optional[str] = 'keywords'):
+def ai_loop(template:Optional[str] = 'keywords'):
     
+    # initialize a parser
     parser = MessageParser(template_name = template)
     
     batch_id = 1
     
     while True:
-        batch = next_batch(size = 3)
+        
+        # fetch a batch of messages
+        batch = next_batch(size = 10)
         
         if len(batch) == 0:
             break
         
         logger.info(f"Parsing batch {batch_id}")
+        
+        # parse each message in the batch
         for message in batch:
-            resp = gpt_parse(message.message, message.phone, parser)
-            ai_message = resp.content
             try:
-                ai_json = json.dumps(resp.content, ensure_ascii=False)
-                json_compatible = True
-            except:
-                ai_json = None
-                json_compatible = False
-            prompt_tokens = resp.prompt_tokens
-            completion_tokens = resp.completion_tokens
-            total_tokens = resp.total_tokens
-            
-            info = dict(
-                ai_message = ai_message,
-                ai_json = ai_json,
-                json_compatible = json_compatible,
-                prompt_tokens = prompt_tokens,
-                completion_tokens = completion_tokens,
-                total_tokens = total_tokens
-            )
-            
-            update_message(next(get_db()), message.id, **info)
-        time.sleep(3)
+                gpt_parse(message.message, message.phone, parser)
+            except Exception as e:
+                logger.info("Error parsing message. Don' worry, we'll try again later.")
+                logger.info(e)
+        time.sleep(1)
         
         batch_id += 1
         
