@@ -4,4 +4,4 @@ sqlalchemy
 pandas
 numpy
 pydantic
-"typer[all]"
+typer[all]
