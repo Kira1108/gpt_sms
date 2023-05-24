@@ -1,5 +1,9 @@
 # GPT Message Parser
 
+## Recommend: Run On Colab
+[Colab Notebook](messagegpt.ipynb)
+
+
 ## Configurations
 
 Recommend to use a absolute path on google drive, e.g.     
