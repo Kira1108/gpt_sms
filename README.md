@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     FEWSHOT_EXAMPLE_PATH = "./example.json" # if you have a fewshot example json file
 ```
 
-## Prepare your data either csv of feather
+## Prepare your data either csv or feather
 Locate your file at `/path/to/csv/file` or `/path/to/feather/file`,  which fill be used in data preparation step.
 
 ## Prepare Data
