@@ -41,7 +41,7 @@ def gpt_parse(message_id:int, message:str, phone:str, parser:MessageParser) -> b
     return update_message(next(get_db()), message_id, **info)
 
 
-def ai_loop(template:Optional[str] = 'keywords'):
+def ai_loop(template:Optional[str] = 'keywords',batch:int = 20):
     
     # initialize a parser
     parser = MessageParser(template_name = template)
@@ -51,7 +51,7 @@ def ai_loop(template:Optional[str] = 'keywords'):
     while True:
         
         # fetch a batch of messages
-        batch = next_batch(size = 3)
+        batch = next_batch(size = batch)
         
         if len(batch) == 0:
             break
