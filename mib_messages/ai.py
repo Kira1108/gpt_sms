@@ -41,12 +41,14 @@ def gpt_parse(message_id:int, message:str, phone:str, parser:MessageParser) -> b
     return update_message(next(get_db()), message_id, **info)
 
 
-def ai_loop(template:Optional[str] = 'keywords',batch:int = 20):
+def ai_loop(template:Optional[str] = 'keywords',batch:int = 20, limit: int = 100):
     
     # initialize a parser
     parser = MessageParser(template_name = template)
     
     batch_id = 1
+    
+    message_count = 0
     
     while True:
         
@@ -64,6 +66,12 @@ def ai_loop(template:Optional[str] = 'keywords',batch:int = 20):
                 gpt_parse(message.id, message.message, message.phone, parser)
             except Exception as e:
                 logger.info("Error parsing message. Don' worry, we'll try again later. OpenAI overload is not a real problem.")
+                
+            message_count += 1
+            
+            if message_count >= limit:
+                logger.info(f"Reached message limit of {limit}.")
+                return
         time.sleep(1)
         
         batch_id += 1
