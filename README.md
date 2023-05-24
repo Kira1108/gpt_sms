@@ -3,6 +3,9 @@
 ## Recommend: Run On Colab
 [Colab Notebook](messagegpt.ipynb)
 
+## Iterative Prompt Design
+[Colab Notebook](prompt_iteration.ipynb)
+
 
 ## Configurations
 
