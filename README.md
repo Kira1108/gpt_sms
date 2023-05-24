@@ -12,7 +12,7 @@ Recommend to use a absolute path on google drive, e.g.
 `sqlite:////content/drive/MyDrive/Not Code/testsl.db`
 
 ## Prepare your data either csv or feather
-Locate your file at `/path/to/csv/file` or `/path/to/feather/file`,  which fill be used in data preparation step.
+Locate your file at `/path/to/csv/file` or `/path/to/feather/file`,  which will be used in data preparation step.
 
 ## Prepare Data
 ```bash
