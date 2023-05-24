@@ -63,8 +63,7 @@ def ai_loop(template:Optional[str] = 'keywords',batch:int = 20):
             try:
                 gpt_parse(message.id, message.message, message.phone, parser)
             except Exception as e:
-                logger.info("Error parsing message. Don' worry, we'll try again later.")
-                logger.info(e)
+                logger.info("Error parsing message. Don' worry, we'll try again later. OpenAI overload is not a real problem.")
         time.sleep(1)
         
         batch_id += 1
