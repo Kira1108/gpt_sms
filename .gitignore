@@ -130,13 +130,11 @@ dmypy.json
 
 model_files/*
 videos/*
-images/*
 datasets
 datasets*
 .DS_Store
 others
 nohup.out
 env
-images
 raw_data/*
 message_ai.db
