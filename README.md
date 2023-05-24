@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     OPENAI_API_KEY:str = os.getenv("OPENAI_API_KEY","fake_api_key") # export OPENAI_API_KEY=your_api_key
     FEWSHOT_EXAMPLE_PATH = "./example.json" # if you have a fewshot example json file
 ```
-Recommend to use a absolute path on google drive, e.g.
+Recommend to use a absolute path on google drive, e.g.     
 `sqlite:////content/drive/MyDrive/Not Code/testsl.db`
 
 ## Prepare your data either csv or feather
