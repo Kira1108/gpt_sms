@@ -18,10 +18,10 @@ export OPENAI_API_KEY=your_api_key
 export SQLITE_URI="sqlite:////content/drive/MyDrive/Not Code/testsl.db"
 ```
 
-## Prepare your data either csv or feather
+## Prepare your data in either csv or feather format
 Locate your file at `/path/to/csv/file` or `/path/to/feather/file`,  which will be used in data preparation step.
 
-## Prepare Data
+## Create message database
 ```bash
 python data_main.py --fmt [csv|feather] [--replace] path/to/csv/file 
 ```
