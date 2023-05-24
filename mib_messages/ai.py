@@ -51,15 +51,15 @@ def ai_loop(template:Optional[str] = 'keywords',batch:int = 20):
     while True:
         
         # fetch a batch of messages
-        batch = next_batch(size = batch)
+        current_batch = next_batch(size = batch)
         
-        if len(batch) == 0:
+        if len(current_batch) == 0:
             break
         
         logger.info(f"Parsing batch {batch_id}")
         
         # parse each message in the batch
-        for message in batch:
+        for message in current_batch:
             try:
                 gpt_parse(message.id, message.message, message.phone, parser)
             except Exception as e:
