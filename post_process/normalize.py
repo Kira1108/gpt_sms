@@ -197,6 +197,7 @@ SECONDARY_TYPE_REPLACE_DICT = {
  'Customer Service': 'Services',
  'Media and Entertainment': 'Entertainment',
  'Home Services': 'Retail',
+ 'None':UNCLEAR_CATEGORY
 }
 
 @dataclass
