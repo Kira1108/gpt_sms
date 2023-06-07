@@ -2,12 +2,16 @@ import pandas as pd
 import numpy as np
 from dataclasses import dataclass
 import random
+import sqlite3
+
+INPUT_FILE = "normalized.feather"
+OUTPUT_DB = "ng_message_ai.db"
 
 
 @dataclass
 class PrimaryCategoryVectorizer:
     
-    prefix :str= 'msg_func_'
+    prefix :str= 'func_'
     
     def __post_init__(self):
 
@@ -35,7 +39,7 @@ class PrimaryCategoryVectorizer:
 @dataclass
 class SecondaryCategoryVectorizer:
     
-    prefix: str = 'msg_content_'
+    prefix: str = 'content_'
 
 
     def __post_init__(self):
@@ -82,11 +86,9 @@ class SecondaryCategoryVectorizer:
         
         categories = df.secondary_category.apply(lambda x:self.category2id[x]).values
         return pd.DataFrame(np.eye(self.N)[categories], columns = columns)     
-    
-    
-if __name__ == "__main__":
-    # where to read the normalize data (with some replacement clearning.)
-    phone_stats = pd.read_feather("normalized.feather")
+
+def vectorize_and_validate():
+    phone_stats = pd.read_feather(INPUT_FILE)
 
     print("Creating primary category one hot matrix")
     pc = PrimaryCategoryVectorizer()
@@ -118,14 +120,23 @@ if __name__ == "__main__":
         idx = random.randint(0, len(phone_stats))
         print(revert_categories[idx], "----" ,actually_categories[idx])
         
-    
-    # dump result to database   
-    import sqlite3
+    return phone_stats, pc_1hot, sc_1hot
 
-    with sqlite3.connect("ng_message_ai.db") as conn:
+
+def to_database():
+    phone_stats, pc_1hot, sc_1hot = vectorize_and_validate()
+    
+    with sqlite3.connect(OUTPUT_DB) as conn:
         primary = pd.concat([phone_stats[['phone']], pc_1hot], axis= 1)
+        primary.columns = [col.replace(" ","_").replace("-","_") for col in primary.columns]
         primary.to_sql("message_primary", conn, if_exists = 'replace', index = False)
         
-    with sqlite3.connect("ng_message_ai.db") as conn:
+    with sqlite3.connect(OUTPUT_DB) as conn:
         secondary = pd.concat([phone_stats[['phone']], sc_1hot], axis= 1)
+        secondary.columns = [col.replace(" ","_").replace("-","_")  for col in secondary.columns]
         secondary.to_sql("message_secondary", conn, if_exists = 'replace', index = False)
+    
+    
+if __name__ == "__main__":
+    
+    to_database()
