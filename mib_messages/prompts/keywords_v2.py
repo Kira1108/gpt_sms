@@ -23,3 +23,6 @@ message = ```{message}```
 """
 
 KEYWORDS_V2_PROMPT = PromptTemplate(input_variables=["message"], template=KEYWORDS_V2_TEMPLATE)
+
+
+# first, second, third, f

@@ -47,13 +47,5 @@ def test_update():
     assert msg.total_tokens == 20
     assert msg.ai_json == '{"key",:"fake"}'
     assert msg.json_compatible == True
-    
-    
-        
-    
 
     
-    
-
-    
-

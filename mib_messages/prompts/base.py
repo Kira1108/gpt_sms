@@ -5,6 +5,7 @@ from mib_messages.prompts.entity import ENTITY_PROMPT
 from mib_messages.prompts.concise import CONCISE_PROMPT
 from mib_messages.prompts.keywords import KEYWORDS_PROMPT
 from mib_messages.prompts.keywords_v2 import KEYWORDS_V2_PROMPT
+from mib_messages.prompts.multilabel import MULTILABEL_PROMPT
 from mib_messages.prompts.fewshot import create_default_fewshot_template
 
 from abc import ABC, abstractmethod
@@ -16,7 +17,8 @@ TEMPLATES = dict(
     concise = CONCISE_PROMPT,
     entity = ENTITY_PROMPT,
     keywords = KEYWORDS_PROMPT,
-    keywords_v2 = KEYWORDS_V2_PROMPT
+    keywords_v2 = KEYWORDS_V2_PROMPT,
+    multilabel = MULTILABEL_PROMPT
 )
 
 class BaseMessagePrompt(ABC):
