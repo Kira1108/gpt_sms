@@ -162,12 +162,12 @@ secondary_vectorizer = CategoryVectorizer(secondary_category_names, prefix='cont
 
 primary_1hot_df = primary_vectorizer(category_df, 'primary_category')
 
-primary_1hot_df['phone'] = category_df['phone']
+primary_1hot_df['phone'] = category_df['phone'].tolist()
 primary_1hot_df.set_index('phone', inplace=True)
 
 secondary_1hot_df = secondary_vectorizer(category_df, 'secondary_category')
 
-secondary_1hot_df['phone'] = category_df['phone']
+secondary_1hot_df['phone'] = category_df['phone'].tolist()
 secondary_1hot_df.set_index('phone', inplace=True)
 
 
